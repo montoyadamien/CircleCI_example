@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  plant:
+    build: ./plant
+    image: garden/plant
+    restart: unless-stopped
+    container_name: plant
+    environment:
+      - PGHOST=postgres
+      - PGPORT=5432
+      - DB_HOST=postgres
+      - DB_USER=garden
+      - DB_PORT=5432
+      - DB_NAME=garden
+      - DB_PASSWORD=supergarden
+      - PORT=3001
+    depends_on:
+      - postgres
+
+  tree:
+    build: ./tree
+    image: garden/tree
+    restart: unless-stopped
+    container_name: tree
+    environment:
+      - PGHOST=postgres
+      - PGPORT=5432
+      - DB_HOST=postgres
+      - DB_USER=garden
+      - DB_PORT=5432
+      - DB_NAME=garden
+      - DB_PASSWORD=supergarden
+      - PORT=3002
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    container_name: garden-postgres
+    environment:
+      POSTGRES_PASSWORD: supergarden
+      POSTGRES_DB: garden
+      POSTGRES_USER: garden
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
