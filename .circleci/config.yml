@@ -1,0 +1,106 @@
+# Golang CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-go/ for more details
+version: 2.1
+jobs:
+  tree-build:
+    docker:
+      - image: circleci/golang:1.16
+    parameters:
+      folder:
+        type: string
+        default: '.'
+    working_directory: /go/src/github.com/{{ORG_NAME}}/{{REPO_NAME}}
+    steps:
+      - checkout
+      - run:
+          name: "Go build"
+          command: |
+            cd << parameters.folder >>
+            go build
+
+  tree-tests:
+    docker:
+      - image: circleci/golang:1.16
+        environment:
+          ENV: CI
+          DB_HOST: localhost
+          DB_USER: garden
+          DB_PORT: 5432
+          DB_NAME: garden_test
+          DB_PASSWORD: supergarden
+      - image: circleci/postgres:9.6-alpine
+        environment:
+          POSTGRES_PASSWORD: supergarden
+          POSTGRES_USER: garden
+          POSTGRES_DB: garden
+    parameters:
+      folder:
+        type: string
+        default: '.'
+    working_directory: /go/src/github.com/{{ORG_NAME}}/{{REPO_NAME}}
+    steps:
+      - checkout
+      - run:
+          name: "Go test"
+          command: |
+            cd << parameters.folder >>
+            go test
+
+  plant-build:
+    docker:
+      - image: circleci/golang:1.16
+    parameters:
+      folder:
+        type: string
+        default: '.'
+    working_directory: /go/src/github.com/{{ORG_NAME}}/{{REPO_NAME}}
+    steps:
+      - checkout
+      - run:
+          name: "Go build"
+          command: |
+            cd << parameters.folder >>
+            go build
+
+  plant-tests:
+    docker:
+      - image: circleci/golang:1.16
+        environment:
+          ENV: CI
+          DB_HOST: localhost
+          DB_USER: garden
+          DB_PORT: 5432
+          DB_NAME: garden_test
+          DB_PASSWORD: supergarden
+      - image: circleci/postgres:9.6-alpine
+        environment:
+          POSTGRES_PASSWORD: supergarden
+          POSTGRES_USER: garden
+          POSTGRES_DB: garden
+    parameters:
+      folder:
+        type: string
+        default: '.'
+    working_directory: /go/src/github.com/{{ORG_NAME}}/{{REPO_NAME}}
+    steps:
+      - checkout
+      - run:
+          name: "Go test"
+          command: |
+            cd << parameters.folder >>
+            go test
+workflows:
+  version: 2
+  tree-tests:
+    jobs:
+      - tree-build:
+          folder: './tree'
+      - tree-tests:
+          folder: './tree/tests'
+  plant-tests:
+    jobs:
+      - plant-build:
+          folder: './plant'
+      - plant-tests:
+          folder: './plant/tests'
