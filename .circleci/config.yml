@@ -92,7 +92,7 @@ jobs: # define some jobs, one to build the service, an other to run tests
             go test
             
 workflows: # each job is launched inside a workflow
-  version: 2
+  version: 2.1
   tree-tests: # workflow name
     jobs:
       - tree-build:
