@@ -1,19 +1,19 @@
-# Golang CircleCI 2.0 configuration file
+# Golang CircleCI 2.1 configuration file
 #
 # Check https://circleci.com/docs/2.0/language-go/ for more details
 version: 2.1
-jobs:
-  tree-build:
+jobs: # define some jobs, one to build the service, an other to run tests
+  tree-build: # job name
     docker:
       - image: circleci/golang:1.16
-    parameters:
-      folder:
+    parameters: # define parameters to use inside the job
+      folder: # parameter name
         type: string
         default: '.'
-    working_directory: /go/src/github.com/{{ORG_NAME}}/{{REPO_NAME}}
-    steps:
-      - checkout
-      - run:
+    working_directory: /go/src/github.com/{{ORG_NAME}}/{{REPO_NAME}} # since go need a specific path CircleCI give it to us
+    steps: # steps that will be used in the job
+      - checkout # checkout the repository to get the last version
+      - run: # named step
           name: "Go build"
           command: |
             cd << parameters.folder >>
@@ -90,12 +90,13 @@ jobs:
           command: |
             cd << parameters.folder >>
             go test
-workflows:
+            
+workflows: # each job is launched inside a workflow
   version: 2
-  tree-tests:
+  tree-tests: # workflow name
     jobs:
       - tree-build:
-          folder: './tree'
+          folder: './tree' # here we can setup the parameter value
       - tree-tests:
           folder: './tree/tests'
   plant-tests:
