@@ -10,4 +10,6 @@ This repository aims to show how to use the continuous integration tool CircleCI
 
 ## Configure CircleCI
 
-Get to [CircleCI](https://circleci.com/) then Log In. Then, you can choose your code versionning, GitHub in the case of this example. Then on the "Projects" part, click on "Set Up Project" on the one you want to use with CircleCI.
+- Get to [CircleCI](https://circleci.com/) then Log In.
+- Then, you can choose your code versionning, GitHub in the case of this example. 
+- Next, on the "Projects" part, click on "Set Up Project" on the one you want to use with CircleCI.
