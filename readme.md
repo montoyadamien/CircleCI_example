@@ -13,3 +13,6 @@ This repository aims to show how to use the continuous integration tool CircleCI
 - Get to [CircleCI](https://circleci.com/) then Log In.
 - Then, you can choose your code versionning, GitHub in the case of this example. 
 - Next, on the "Projects" part, click on "Set Up Project" on the one you want to use with CircleCI.
+
+Example of a success build :  
+![Sucess Build Picture](./assets/circle_ci_run.JPG)
