@@ -1,4 +1,4 @@
-# CircleCI example
+# CircleCI example ![Build status](https://circleci.com/gh/montoyadamien/CircleCI_example.svg?style=shield)
 
 This repository aims to show how to use the continuous integration tool CircleCI to launch some database tests. The project example works with Go and PostgreSQL. First we have two Go services, Plant and Tree using PostgreSQL for database access. Pushing on the repository will trigger the CircleCI builds defined [here](./.circleci/config.yml).
 
